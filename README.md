@@ -11,3 +11,8 @@ A social media app where people can share their top ten favorite things under di
 ### Closing The Project
 1. Enter the command `exit` to exit the vagrant environment.
 2. Then enter the command `vagrant halt` to shut down the vagrant environment.
+
+## Authors
+* Reagan Wood
+* Carrington Cooper
+* Geordy Williams
