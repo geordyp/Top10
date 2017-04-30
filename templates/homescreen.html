@@ -5,12 +5,16 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Home</title>
-    <link rel=stylesheet type=text/css href='{{ url_for('static', filename='styles.css') }}'>
+    <link rel=stylesheet type=text/css href='../static/styles.css') }}>
     <link rel=stylesheet type=text/css href='../static/bootstrap.min.css'>
   </head>
 
 <body>
-  <h1>Welcome</h1>
+  <div id="hero-container">
+    <button type="button" class="btn btn-secondary loginSignup">Login/Logout</button>
+    <button type="button" class="btn btn-secondary loginSignup rightButton">Signup</button>
+    <h1 id="title">Top10</h1>
+  </div>
 </body>
 
 </html>
