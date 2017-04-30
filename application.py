@@ -27,8 +27,8 @@ APPLICATION_NAME = 'Item Catalog Project'
 @app.route('/top10')
 def showHome():
     """ Show the home page """
-    return render_template('home.html')
-
+    names = ["Movies", "The Shawshank Redemption", "Batman: The Dark Knight", "Lord of the Rings: Return of the King", "Avatar"]
+    return render_template('homescreen.html', category=names)
 
 if __name__ == '__main__':
     app.secret_key = 'super_duper_secret_key'
