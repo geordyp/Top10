@@ -98,5 +98,5 @@ class ListItem(Base):
         }
 
 
-engine = create_engine('postgresql://me:password@localhost/top10')
+engine = create_engine('sqlite:///top10.db')
 Base.metadata.create_all(engine)
