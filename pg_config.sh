@@ -8,3 +8,6 @@ pip install Flask-Login==0.1.3
 pip install oauth2client
 pip install requests
 pip install httplib2
+
+sudo -u postgres psql -c "CREATE USER me WITH PASSWORD 'password';"
+sudo -u postgres psql -c "CREATE DATABASE top10;"
