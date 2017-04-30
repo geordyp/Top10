@@ -8,6 +8,8 @@ from sqlalchemy.orm import sessionmaker
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
+from database_setup import Base, UserAccount, Category, ListItem, List
+
 from functools import wraps
 
 import string
@@ -22,13 +24,18 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'Item Catalog Project'
 
+engine = create_engine('postgresql://me:password@localhost/top10')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 @app.route('/')
 @app.route('/top10')
 def showHome():
     """ Show the home page """
-    names = ["Movies", "The Shawshank Redemption", "Batman: The Dark Knight", "Lord of the Rings: Return of the King", "Avatar"]
-    return render_template('homescreen.html', category=names)
+    categories = session.query(Category)
+    return render_template('homescreen.html', category=categories)
 
 if __name__ == '__main__':
     app.secret_key = 'super_duper_secret_key'
