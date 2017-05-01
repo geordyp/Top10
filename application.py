@@ -24,18 +24,21 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'Item Catalog Project'
 
-engine = create_engine('postgresql://me:password@localhost/top10')
+engine = create_engine('sqlite:///top10.db')
+
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
 @app.route('/top10')
 def showHome():
     """ Show the home page """
-    categories = session.query(Category)
-    return render_template('homescreen.html', category=categories)
+    data = session.query(Category).all()
+    return render_template('homescreen.html', categories=data)
+
 
 if __name__ == '__main__':
     app.secret_key = 'super_duper_secret_key'

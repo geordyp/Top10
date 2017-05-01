@@ -11,6 +11,11 @@
 
 <body>
   <h1>Welcome</h1>
+  <ul>
+    {% for c in categories %}
+    <li>{{c.name}}</li>
+    {% endfor %}
+  </ul>
 </body>
 
 </html>

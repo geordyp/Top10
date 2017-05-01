@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Base, UserAccount, Category, ListItem, List
 
-engine = create_engine('postgresql://me:password@localhost/top10')
+engine = create_engine('sqlite:///top10.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -27,42 +27,42 @@ session.commit()
 # Create categories
 category1 = Category(name="Video Games",
                      url="TopTenVideogames",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category1)
 session.commit()
 
 category2 = Category(name="Movies",
                      url="TopTenMovies",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category2)
 session.commit()
 
 category3 = Category(name="Albums",
                      url="TopTenAlbums",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category3)
 session.commit()
 
 category4 = Category(name="Foods",
                      url="TopTenFoods",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category4)
 session.commit()
 
 category5 = Category(name="Books",
                      url="TopTenBooks",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category5)
 session.commit()
 
 category6 = Category(name="Cities",
                      url="TopTenCities",
-                     public="true",
+                     public=True,
                      user_account_id="1")
 session.add(category6)
 session.commit()
