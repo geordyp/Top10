@@ -26,42 +26,42 @@ session.commit()
 
 # Create categories
 category1 = Category(name="Video Games",
-                     url="TopTenVideogames",
+                     url="Videogames",
                      public=True,
                      user_account_id="1")
 session.add(category1)
 session.commit()
 
 category2 = Category(name="Movies",
-                     url="TopTenMovies",
+                     url="Movies",
                      public=True,
                      user_account_id="1")
 session.add(category2)
 session.commit()
 
 category3 = Category(name="Albums",
-                     url="TopTenAlbums",
+                     url="Albums",
                      public=True,
                      user_account_id="1")
 session.add(category3)
 session.commit()
 
 category4 = Category(name="Foods",
-                     url="TopTenFoods",
+                     url="Foods",
                      public=True,
                      user_account_id="1")
 session.add(category4)
 session.commit()
 
 category5 = Category(name="Books",
-                     url="TopTenBooks",
+                     url="Books",
                      public=True,
                      user_account_id="1")
 session.add(category5)
 session.commit()
 
 category6 = Category(name="Cities",
-                     url="TopTenCities",
+                     url="Cities",
                      public=True,
                      user_account_id="1")
 session.add(category6)
