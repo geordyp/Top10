@@ -24,9 +24,6 @@ h1 {
   margin-top: 25px;
 }
 
-.rightButton {
-}
-
 .about {
   display: flex;
   flex-direction: row;
@@ -34,25 +31,31 @@ h1 {
   height: 250px;
 }
 
-.gallery-categories {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.flex-gallery {
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  padding: 10px;
-  text-align: center;
-  border: 10px;
-  background-color: red;
-}
-
 .flex-item {
     width: 300px;
     height: 100px;
     margin: auto;
     text-align: center;
+}
+
+/* Gallery Category Stylings */
+
+.gallery-categories {
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  height: 300px;
+}
+
+.galleryitem {
+  margin: 2px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  background-color: red;
+}
+
+.galleryContainer {
+  height: 300px;
+  width: 50%;
 }

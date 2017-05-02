@@ -1,11 +1,9 @@
 {% extends 'base.html'%}
 {% block content %}
-<div class="category">
-    <h2>Category Title</h2>
-    <ol>
+<h2>Category Title</h2>
+<div class="gallery-categories">
       {% for item in category %}
-        <li class"flex-gallery">{{item.name}}</li>
+        <div class="galleryitem">{{item.name}}</div>
       {% endfor %}
-    </ol>
 </div>
 {% endblock %}
