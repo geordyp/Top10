@@ -37,7 +37,7 @@ session = DBSession()
 def showHome():
     """ Show the home page """
     data = session.query(Category).all()
-    return render_template('homescreen.html', categories=data)
+    return render_template('homescreen.html', category=data)
 
 
 if __name__ == '__main__':
