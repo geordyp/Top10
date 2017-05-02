@@ -4,7 +4,7 @@
     <h2>Category Title</h2>
     <ol>
       {% for item in categories %}
-        <li>{{item.name}}</li>
+        <li><a href="{{ url_for('showCategory', category_url=item.url) }}">{{item.name}}</a></li>
       {% endfor %}
     </ol>
 </div>

@@ -1,11 +1,14 @@
-{% extends 'homescreen.html'%}
+{% extends 'base.html'%}
 {% block content %}
 <div class="category">
     <h2>Category Title</h2>
-    <ol>
-      {% for item in category %}
-        <li>{{item}}</li>
+    {% for list in listsWithItems %}
+    <h4>Created by: {{list[0].list.user_account.name}}</h4>
+    <ul style="list-style:none;">
+      {% for item in list %}
+        <li><img src="{{item.img_url}}"><b>{{item.position}} - {{item.title}}</b>: {{item.description}}</li>
       {% endfor %}
-    </ol>
+    </ul>
+    {% endfor %}
 </div>
 {% endblock %}

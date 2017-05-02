@@ -12,7 +12,10 @@ Install Vagrant and VirtualBox if you have not already done so.
 ### Closing The Project
 1. Enter the command `exit` to exit the vagrant environment.
 2. Then enter the command `vagrant halt` to shut down the vagrant environment.
-
+### Reset the database
+1. `rm top10.db`
+2. `python database_setup.py` - View this file to see the structure of the database.
+3. `python populate_database.py` - This file adds filler data to the database. Modify this file to manage the filler data.
 ## Authors
 * Reagan Wood
 * Carrington Cooper
