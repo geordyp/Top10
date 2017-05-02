@@ -26,3 +26,33 @@ h1 {
 
 .rightButton {
 }
+
+.about {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 250px;
+}
+
+.gallery-categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex-gallery {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+  border: 10px;
+  background-color: red;
+}
+
+.flex-item {
+    width: 300px;
+    height: 100px;
+    margin: auto;
+    text-align: center;
+}

@@ -32,10 +32,8 @@ session = DBSession()
 @app.route('/top10')
 def showHome():
     """ Show the home page """
-    # retrieve data
-    categories = session.query(Category).all()
-
-    return render_template('homescreen.html', categories=categories)
+    data = session.query(Category).all()
+    return render_template('homescreen.html', category=data)
 
 
 @app.route('/top10/<string:category_url>')
