@@ -20,14 +20,10 @@ import requests
 
 app = Flask(__name__)
 
-CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
-APPLICATION_NAME = 'Item Catalog Project'
+APPLICATION_NAME = 'Top 10'
 
 engine = create_engine('sqlite:///top10.db')
-
 Base.metadata.bind = engine
-
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
@@ -38,6 +34,20 @@ def showHome():
     """ Show the home page """
     data = session.query(Category).all()
     return render_template('homescreen.html', category=data)
+
+
+@app.route('/top10/<string:category_url>')
+def showCategory(category_url):
+    """ Display category page with all top ten lists """
+    # retrieve data
+    category = session.query(Category).filter_by(url=category_url).one()
+    allLists = session.query(List).filter_by(category_id=category.id).order_by(asc(List.date_created)).all()
+    allListsWithItems = []
+    for l in allLists:
+        listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
+        allListsWithItems.append(listItems)
+
+    return render_template('test-lists.html', listsWithItems=allListsWithItems)
 
 
 if __name__ == '__main__':
