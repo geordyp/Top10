@@ -1,9 +1,10 @@
 {% extends 'base.html'%}
 {% block content %}
-<h2>Category Title</h2>
-<div class="gallery-categories">
-      {% for item in category %}
-        <div class="galleryitem">{{item.name}}</div>
+<div class="category">
+    <h2>Category Title</h2>
+    <ol>
+      {% for item in categories %}
+        <li class"gallery"><a href="{{ url_for('showCategory', category_url=item.url) }}">{{item.name}}</a></li>
       {% endfor %}
 </div>
 {% endblock %}
