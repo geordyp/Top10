@@ -40,22 +40,17 @@ h1 {
 
 /* Gallery Category Stylings */
 
-.gallery-categories {
-  display: -webkit-flex;
-  display: flex;
-  flex-wrap: wrap;
-  height: 300px;
-}
 
 .galleryitem {
-  margin: 2px;
-  width: 200px;
-  height: 200px;
   text-align: center;
   background-color: red;
+  height: 0;
+  padding-bottom: 25%;
+  width: 25%;
+  margin: 1px;
 }
+
 
 .galleryContainer {
   height: 300px;
-  width: 50%;
 }

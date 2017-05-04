@@ -7,6 +7,8 @@
     <title>Home</title>
     <link rel=stylesheet type=text/css href='../static/styles.css') }}>
     <link rel=stylesheet type=text/css href='../static/bootstrap.min.css'>
+    <link rel=stylesheet type=text/css href='../static/ink.css'>
+    <link re=stylesheet type=text/css href='../static/bulma.css'>
   </head>
 
 <body>
@@ -20,10 +22,18 @@
     <p class="flex-item"><b>Compare your Top10s</b></p>
     <p class="flex-item"><b>Show your Passions</b></p>
   </div>
-  <div class="galleryContainer">
-     {% block content %}
-     {% endblock %}
-   </div>
+  <div class="ink-grid galleryContainer">
+    <div class="column-group">
+      <div class="all-50">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var cw = $('all-25').width();
+  $('all-25').css({'height':cw+'px'});
+</script>
