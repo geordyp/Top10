@@ -1,22 +1,28 @@
 <!doctype html>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <html lang='en'>
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Home</title>
-    <link rel=stylesheet type=text/css href='../static/styles.css') }}>
+    <link rel=stylesheet type=text/css href='../static/styles.css'>
     <link rel=stylesheet type=text/css href='../static/bootstrap.min.css'>
     <link rel=stylesheet type=text/css href='../static/ink.css'>
-    <link re=stylesheet type=text/css href='../static/bulma.css'>
+    <!--<link re=stylesheet type=text/css href='../static/bulma.css'>-->
   </head>
 
 <body>
-  <div id="hero-container">
-    <button type="button" class="btn btn-secondary loginSignup">Login/Logout</button>
-    <button type="button" class="btn btn-secondary loginSignup rightButton">Signup</button>
-    <h1 id="title">Top10</h1>
-  </div>
+    <div class="ink-grid">
+        <div class="column-group navbaritem">
+                <div class="all-33 buttongroup">
+                  <a class="heroButtons">Login</a>
+                  <a class="heroButtons">Signup</a>
+                </div>
+                <div class="all-33 topimage"></div>
+                <p class="all-33"></p>
+        </div>
+    </div>
   <div class="about">
     <p class="flex-item"><b>Create Your Top10s</b></p>
     <p class="flex-item"><b>Compare your Top10s</b></p>
@@ -32,8 +38,3 @@
   </div>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-  var cw = $('all-25').width();
-  $('all-25').css({'height':cw+'px'});
-</script>

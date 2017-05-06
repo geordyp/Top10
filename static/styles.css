@@ -1,28 +1,11 @@
+html,body {
+    height:100%;
+}
+
 h1 {
   color: blue;
 }
 
-#hero-container {
-  overflow: auto;
-  background-color: #ec971f;
-  height: 250px;
-  width: 100%;
-}
-
-#title {
-  padding-top: 100px;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  font-family: Arial;
-}
-
-.loginSignup {
-  float:right;
-  margin-right: 20px;
-  display: inline-block;
-  margin-top: 25px;
-}
 
 .about {
   display: flex;
@@ -53,4 +36,36 @@ h1 {
 
 .galleryContainer {
   height: 300px;
+}
+
+/* hero styles */
+.navbaritem {
+  background-color: black;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 100px;
+  width: 100%;
+
+}
+
+.buttongroup{
+  height: 100%;
+}
+.heroButtons {
+    text-align: center;
+    position: relative;
+    top: 40%;
+    margin-left: 20px;
+}
+
+.topimage {
+  background-image: url('../static/TopTen.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
