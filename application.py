@@ -47,7 +47,7 @@ def showCategory(category_url):
         listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
         allListsWithItems.append(listItems)
 
-    return render_template('category.html', listsWithItems=allListsWithItems)
+    return render_template('categorytable.html', listsWithItems=allListsWithItems)
 
 
 if __name__ == '__main__':
