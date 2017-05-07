@@ -1,8 +1,8 @@
 {% extends 'base.html'%}
 {% block content %}
-<div class="column-group">
+<div class="column-group large-half-horizontal-gutters">
       {% for item in categories %}
-          <a class="all-25 galleryitem" href="{{ url_for('showCategory', category_url=item.url) }}">{{item.name}}</a>
+          <a class="all-25 galleryitem" href="{{ url_for('showCategory', category_url=item.url) }}"><div class="categorytext">{{item.name}}</div></a>
       {% endfor %}
 </div>
 {% endblock %}

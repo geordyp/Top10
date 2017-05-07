@@ -6,12 +6,9 @@ h1 {
   color: blue;
 }
 
-
+/* styling the about elements */
 .about {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  height: 250px;
+
 }
 
 .flex-item {
@@ -26,17 +23,27 @@ h1 {
 
 .galleryitem {
   text-align: center;
-  background-color: red;
+  background-color: #42aaf4;
   height: 0;
   padding-bottom: 25%;
   width: 25%;
-  margin: 1px;
+  border: 2px solid white;
 }
 
 
 .galleryContainer {
+  position: relative;
+  top: 100px;
   height: 300px;
 }
+
+.categorytext {
+  height: 100%;
+  position: relative;
+  top: 40%;
+  color: red;
+}
+
 
 /* hero styles */
 .navbaritem {
