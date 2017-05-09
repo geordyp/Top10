@@ -1,7 +1,6 @@
 from flask import Flask,g, render_template, request, redirect, jsonify, url_for, flash
 from flask import session as login_session
 from flask import make_response
-
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
 
@@ -18,7 +17,10 @@ import json
 import httplib2
 import requests
 import os
+
 app = Flask(__name__)
+
+
 
 APPLICATION_NAME = 'Top 10'
 
@@ -96,9 +98,8 @@ def register():
         email = request.form['Email']
         name = request.form['username']
         password = request.form['pwd']
+        get_hashed_password(password)
        
-	               
-
 if __name__ == '__main__':
      app.run(debug=True)
 
