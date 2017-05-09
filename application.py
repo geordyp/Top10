@@ -94,12 +94,14 @@ def dropsession():
 def register():
      if request.method == 'GET':  
    	return render_template('register.html')
-     if request.method == 'POST':
-        email = request.form['Email']
-        name = request.form['username']
-        password = request.form['pwd']
-        get_hashed_password(password)
-       
+     email = request.form['email']
+     name = request.form['username']
+     password = request.form['pwd']
+     newUser = UserAccount(name=name,email=email,pwHash=password)
+     print("hello")
+     session.add(newUser)
+     session.flush()
+     return redirect(url_for('login'))    
 if __name__ == '__main__':
      app.run(debug=True)
 
