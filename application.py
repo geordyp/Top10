@@ -17,6 +17,7 @@ import json
 import httplib2
 import requests
 import os
+import hashlib 
 
 app = Flask(__name__)
 
@@ -39,7 +40,7 @@ def login():
 
       if request.form['password'] == 'password':
 		login_session['user'] = request.form['username']
-		return redirect(url_for('home'))
+		return redirect(url_for('showHome'))
 
   		
    return render_template('login.html')
@@ -97,7 +98,10 @@ def register():
      email = request.form['email']
      name = request.form['username']
      password = request.form['pwd']
-     newUser = UserAccount(name=name,email=email,pwHash=password)
+     pwd1 = hashlib.sha256(password)
+     pwd = pwd1.hexdigest()
+     print(pwd)
+     newUser = UserAccount(name=name,email=email,pwHash=pwd)
      print(newUser.name)
      session.add(newUser)
      session.flush()
