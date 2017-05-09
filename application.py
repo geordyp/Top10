@@ -98,7 +98,7 @@ def register():
      name = request.form['username']
      password = request.form['pwd']
      newUser = UserAccount(name=name,email=email,pwHash=password)
-     print("hello")
+     print(newUser.name)
      session.add(newUser)
      session.flush()
      return redirect(url_for('login'))    
