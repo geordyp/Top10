@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class=" -webkit-">
+       
+    <head>
+		<title>Rank</title>
+		
+        <link rel=stylesheet type=text/css href='{{ url_for('static',filename='styles.css')}}'> 
+          </head>        
+<body>      
+           
+  <div class="login">
+<h1>Welcome to</h1>
+<h1>Top10</h1>
+    <form method="post">
+    <input type="text" placeholder="username" name="username">
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
+</form>
+  <a href ="{{ url_for('register')}}">Create a new Account</a>
+</div>
+</body>
+</html>
+  
