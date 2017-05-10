@@ -1,23 +1,35 @@
-<!DOCTYPE html>
-<html class=" -webkit-">
-       
-    <head>
-		<title>Rank</title>
-		
-        <link rel=stylesheet type=text/css href='{{ url_for('static',filename='styles.css')}}'> 
-          </head>        
-<body>      
-           
-  <div class="login">
-<h1>Welcome to</h1>
-<h1>Top10</h1>
-    <form method="post">
-    <input type="text" placeholder="username" name="username">
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
-</form>
-  <a href ="{{ url_for('register')}}">Create a new Account</a>
+<link rel="stylesheet" href="/static/login.css" type="text/css">
+{% block body %}
+{% if session['logged_in'] %}
+<p>You're logged in already!</p>
+{% else %}
+
+
+<form action="/login" method="POST">
+<div class="login">
+<div class="login-screen">
+<div class="app-title">
+<h1>Welcome to Top10</h1>
 </div>
-</body>
-</html>
-  
+
+<div class="login-form">
+<div class="control-group">
+<input type="text" class="login-field" value="" placeholder="username" name="username">
+<label class="login-field-icon fui-user" for="login-name"></label>
+</div>
+
+<div class="control-group">
+<input type="password" class="login-field" value="" placeholder="password" name="password">
+<a href = "{{ url_for('register')}}">Create a new Account</a>
+<label class="login-field-icon fui-lock" for="login-pass"></label>
+</div>
+
+                <input type="submit" value="Log in" class="btn btn-primary btn-large btn-block" >
+    <br>
+</div>
+</div>
+</div>
+</form>
+
+{% endif %}
+{% endblock %}
