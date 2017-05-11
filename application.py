@@ -104,7 +104,7 @@ def showCategory(category_url):
     except NoResultFound:
         abort(404)
 
-    allLists = session.query(List).filter_by(category_id=listCategory.id).order_by(asc(List.date_created)).all()
+    allLists = session.query(List).filter_by(category_id=listCategory.id).order_by(desc(List.date_created)).all()
     allListsWithItems = []
     for l in allLists:
         listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
