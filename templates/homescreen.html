@@ -5,7 +5,7 @@
 </h2>
 <div class="column-group large-half-horizontal-gutters">
       {% for item in categories %}
-          <a class="all-25 galleryitem" href="{{ url_for('showCategory', category_url=item.url) }}"><div class="categorytext">{{item.name}}</div></a>
+          <a class="all-25 galleryitem categorytext" href="{{ url_for('showCategory', category_url=item.url) }}">{{item.name}}</a>
       {% endfor %}
 </div>
 {% endblock %}

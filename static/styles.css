@@ -32,11 +32,14 @@ h1 {
   height: 0;
   padding-bottom: 25%;
   width: 25%;
+  font-weight: bold;
+
   border: 2px solid white;
 }
 
 a:hover.galleryitem {
   text-decoration: none;
+  color: white;
 }
 
 .galleryContainer {
@@ -73,7 +76,13 @@ a:hover.galleryitem {
 
 .buttongroup{
   height: 100%;
+
 }
+
+a:hover.heroButtons {
+  color: #ff3333;
+}
+
 .heroButtons {
     text-align: center;
     position: relative;
