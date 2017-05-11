@@ -16,7 +16,7 @@
         <div class="column-group navbaritem">
                 <div class="all-33 buttongroup">
                   {% if logged_in %}
-                  <a class="heroButtons" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="heroButtons btn btn-secondary" href="{{ url_for('logout') }}">Logout</a>
                   {% else %}
                   <a class="heroButtons" href="{{ url_for('home') }}">Login</a>
                   <a class="heroButtons" href="{{ url_for('register') }}">Signup</a>

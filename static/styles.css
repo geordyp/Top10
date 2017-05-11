@@ -35,6 +35,9 @@ h1 {
   border: 2px solid white;
 }
 
+a:hover.galleryitem {
+  text-decoration: none;
+}
 
 .galleryContainer {
   position: relative;
@@ -74,8 +77,11 @@ h1 {
 .heroButtons {
     text-align: center;
     position: relative;
-    top: 40%;
-    margin-left: 20px;
+    top: 35%;
+    margin-left: 25px;
+    color: white;
+    font-weight: bold;
+    border: 1px solid white;
 }
 
 .topimage {

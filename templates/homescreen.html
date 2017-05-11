@@ -1,5 +1,8 @@
 {% extends 'base.html'%}
 {% block content %}
+<h2 class="categorystyles blackcolor">
+  Top10 Categories
+</h2>
 <div class="column-group large-half-horizontal-gutters">
       {% for item in categories %}
           <a class="all-25 galleryitem" href="{{ url_for('showCategory', category_url=item.url) }}"><div class="categorytext">{{item.name}}</div></a>
