@@ -42,21 +42,22 @@ def do_admin_login():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
     phash = hashlib.sha256(POST_PASSWORD).hexdigest()
-    result = session.query(UserAccount).filter_by(name=POST_USERNAME, pwHash=phash).all()
-    if result:
+    user = session.query(UserAccount).filter_by(name=POST_USERNAME, pwHash=phash).all()
+    if user:
        login_session['logged_in'] = True
-       login_session['user_id'] = result[0].id
+       login_session['user_id'] = user[0].id
+       return redirect(url_for('home'))
     else:
-        # TODO display error
-        flash('wrong password!')
-    return home()
+        error = "Incorrect username or password."
+        return render_template('login.html',
+                               error=error)
 
 
 @app.route("/logout")
 def logout():
     login_session['logged_in'] = False
     login_session['user_id'] = -1
-    return home()
+    return redirect(url_for('home'))
 
 
 @app.route('/register',methods=['GET','POST'])
@@ -68,8 +69,15 @@ def register():
         name = request.form['username']
         password = request.form['pwd']
         pwd = hashlib.sha256(password).hexdigest()
-        # TODO check if name is taken
-        newUser = UserAccount(name=name,email=email,pwHash=pwd)
+
+        result = session.query(UserAccount).filter_by(name=name).all()
+        if result:
+            error = "That username is taken."
+            return render_template('register.html', error=error)
+
+        newUser = UserAccount(name=name,
+                              email=email,
+                              pwHash=pwd)
         session.add(newUser)
         session.commit()
         return redirect(url_for('home'))
@@ -87,9 +95,11 @@ def showHome():
 @app.route('/top10/category/<string:category_url>')
 def showCategory(category_url):
     """ Display category page with all top ten lists """
-    # retrieve data
-    # TODO 404 category not found
-    listCategory = session.query(Category).filter_by(url=category_url).one()
+    try:
+        listCategory = session.query(Category).filter_by(url=category_url).one()
+    except NoResultFound:
+        abort(404)
+
     allLists = session.query(List).filter_by(category_id=listCategory.id).order_by(asc(List.date_created)).all()
     allListsWithItems = []
     for l in allLists:
@@ -109,8 +119,10 @@ def newTopTenList(category_url):
     if not login_session.get('logged_in'):
         return redirect(url_for('home'))
 
-    # TODO 404 category not found
-    listCategory = session.query(Category).filter_by(url=category_url).one()
+    try:
+        listCategory = session.query(Category).filter_by(url=category_url).one()
+    except NoResultFound:
+        abort(404)
 
     # check if a list in this category has already been created by this user
     existingList = session.query(List).filter_by(category_id=listCategory.id, user_account_id=login_session.get('user_id')).all()
@@ -136,8 +148,11 @@ def editTopTenList(list_id):
     if not login_session.get('logged_in'):
         return redirect(url_for('home'))
 
-    # TODO 404 list not found
-    topTenList = session.query(List).filter_by(id=list_id).one()
+    try:
+        topTenList = session.query(List).filter_by(id=list_id).one()
+    except NoResultFound:
+        abort(404)
+
     listItems = session.query(ListItem).filter_by(list_id=list_id).order_by(asc(ListItem.position)).all()
 
     # check if the user created the list they're about to edit
@@ -163,8 +178,10 @@ def newListItem(list_id):
     if not login_session.get('logged_in'):
         return redirect(url_for('home'))
 
-    # TODO 404 list not found
-    topTenList = session.query(List).filter_by(id=list_id).one()
+    try:
+        topTenList = session.query(List).filter_by(id=list_id).one()
+    except NoResultFound:
+        abort(404)
 
     # check if the user created the list they're about to edit
     if login_session.get('user_id') != topTenList.user_account_id:
@@ -221,8 +238,10 @@ def editListItem(listItem_id):
     if not login_session.get('logged_in'):
         return redirect(url_for('home'))
 
-    # TODO 404 item not found
-    editedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+    try:
+        editedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+    except NoResultFound:
+        abort(404)
 
     # check if the user created the list they're about to edit
     if login_session.get('user_id') != editedListItem.list.user_account_id:
@@ -305,8 +324,10 @@ def deleteListItem(listItem_id):
     if not login_session.get('logged_in'):
         return redirect(url_for('home'))
 
-    # TODO 404 not found
-    deletedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+    try:
+        deletedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+    except NoResultFound:
+        abort(404)
 
     # check if the user created the list they're about to edit
     if login_session.get('user_id') != deletedListItem.list.user_account_id:
@@ -322,6 +343,12 @@ def deleteListItem(listItem_id):
     session.delete(deletedListItem)
     session.commit()
     return redirect(url_for('editTopTenList', list_id=deletedListItem.list_id))
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('not_found.html',
+                           logged_in=login_session.get('logged_in'))
 
 
 if __name__ == '__main__':
