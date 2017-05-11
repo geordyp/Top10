@@ -3,7 +3,7 @@
 <br>
 <br>
   <div class="column-group">
-    <div class="all-25 hiddenelement">
+    <div class="all-25">
       <p class="leftpadd">
     </div>
     <div class="all-50 uploadbox">
@@ -11,11 +11,11 @@
       <form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
         <div>
           <div>Title</div>
-          <input type='text' name='title' value='{{title}}' placeholder='Type the Title'></input>
+          <input class="titlestyle" type='text' name='title' value='{{title}}' placeholder='Type the Title'></input>
         </div>
         <div>
           <div class="pad">Description</div>
-          <textarea class="textbox" name='description' placeholder="Type the description">{{description}}</textarea>
+          <textarea class="textbox" name='description' placeholder="Type the Description">{{description}}</textarea>
         </div>
         <br><br><div class="error">{{error}}</div><br>
         <div class="buttonheight">

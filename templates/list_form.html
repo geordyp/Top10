@@ -2,15 +2,24 @@
 {% block content %}
 <br>
 <br>
-<h2>Your List For {{list.category.name}}</h2>
-<ol>
-  {% for i in listItems %}
-  <li><b>{{i.title}}</b></li>
-  {% endfor %}
+<div class="column-group">
+  <div class="all-25">
+    <p class="leftpadd">
+  </div>
+  <div class="all-50 uploadbox">
+    <h2>Your List For {{list.category.name}}</h2>
+    <ol>
+      {% for i in listItems %}
+      <li><b>{{i.title}}</b></li>
+      {% endfor %}
 
-  {% if canAddMoreItems %}
-  <li><a href="{{ url_for('newListItem', list_id=list.id) }}"><b>Add New Item</b></a></li>
-  {% endif %}
-</ol>
-<br><br><div class="error">{{error}}</div><br>
+      {% if canAddMoreItems %}
+      <li><a href="{{ url_for('newListItem', list_id=list.id) }}"><b>Add New Item</b></a></li>
+      {% endif %}
+    </ol>
+  </div>
+  <div class="all-25">
+  </div>
+  <br><br><div class="error">{{error}}</div><br>
+</div>
 {% endblock %}

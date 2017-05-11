@@ -106,12 +106,16 @@ a:hover.plusimage {
 }
 
 .addcategory {
-    color: black;
+    color: white;
 }
 
 a:hover.addcategory {
   text-decoration: none;
-  color: white;
+  color: black;
+}
+
+.blackcolor {
+  color: black;
 }
 
 .categorystyles{
@@ -145,6 +149,10 @@ h2 {
 
 .buttonheight {
   padding-bottom: 20px;
+}
+
+.titlestyle {
+  width: 60%;
 }
 
 .uploadbox{
