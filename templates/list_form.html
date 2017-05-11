@@ -2,10 +2,10 @@
 {% block content %}
 <br>
 <br>
-<h2>Your List For {{list.category.name}}</h2>
+<h2>Your List For <a href="{{ url_for('showCategory', category_url=list.category.url) }}">{{list.category.name}}</a></h2>
 <ol>
   {% for i in listItems %}
-  <li><b>{{i.title}}</b></li>
+  <li><b>{{i.title}}</b> -- <a href="{{ url_for('editListItem', listItem_id=i.id) }}">Edit</a> | <a href="{{ url_for('deleteListItem', listItem_id=i.id) }}">Delete</a></li>
   {% endfor %}
 
   {% if canAddMoreItems %}

@@ -3,17 +3,31 @@
 <br>
 <br>
 <h2>Item Number {{position}} in Your {{list.category.name}} List</h2>
+{% if editing %}
+<form action='{{ url_for('editListItem', listItem_id=id) }}' method='post'>
+{% else %}
 <form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
+{% endif %}
+  {% if editing %}
+  <label>
+    <div>Position</div>
+    <input type='number' min="1" max="10" name='position' value="{{position}}"></input>
+  </label>
+  {% endif %}
   <label>
     <div>Title</div>
-    <input type='text' name='title' value={{title}}></input>
+    <input type='text' name='title' value="{{title}}"></input>
   </label>
   <label>
     <div>Description</div>
     <textarea name='description'>{{description}}</textarea>
   </label>
-  <br><br><div class="error">{{error}}</div><br>
-  <input type='submit' value='Create'>
+  <br><br><div class='error'>{{error}}</div><br>
+  {% if editing %}
+  <input type='submit' value="Edit">
+  {% else %}
+  <input type='submit' value="Create">
+  {% endif %}
   <a href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
 </form>
 {% endblock %}
