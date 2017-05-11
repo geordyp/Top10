@@ -82,6 +82,18 @@ h1 {
   height: 100%;
 }
 
+a:hover.topimage {
+  border-left:2px solid black;
+}
+
+.plusimage {
+  background-image: url('../static/add.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+}
+
 /* top10 tables*/
 .tablebackground{
   background-color: #f48f42;
