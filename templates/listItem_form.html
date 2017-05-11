@@ -2,18 +2,29 @@
 {% block content %}
 <br>
 <br>
-<h2>Item Number {{position}} in Your {{list.category.name}} List</h2>
-<form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
-  <label>
-    <div>Title</div>
-    <input type='text' name='title' value={{title}}></input>
-  </label>
-  <label>
-    <div>Description</div>
-    <textarea name='description'>{{description}}</textarea>
-  </label>
-  <br><br><div class="error">{{error}}</div><br>
-  <input type='submit' value='Create'>
-  <a href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
-</form>
+  <div class="column-group">
+    <div class="all-25 hiddenelement">
+      <p class="leftpadd">
+    </div>
+    <div class="all-50 uploadbox">
+      <h2>Item {{position}} in Your {{list.category.name}} List</h2>
+      <form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
+        <div>
+          <div>Title</div>
+          <input type='text' name='title' value='{{title}}' placeholder='Type the Title'></input>
+        </div>
+        <div>
+          <div class="pad">Description</div>
+          <textarea class="textbox" name='description' placeholder="Type the description">{{description}}</textarea>
+        </div>
+        <br><br><div class="error">{{error}}</div><br>
+        <div class="buttonheight">
+          <input class="btn btn-success" type='submit' value='Create'>
+          <a class="btn btn-danger" href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
+        </div>
+      </form>
+    </div>
+    <div class="all-25">
+    </div>
+  </div>
 {% endblock %}
