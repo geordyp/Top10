@@ -16,8 +16,12 @@
     <div class="ink-grid">
         <div class="column-group navbaritem">
                 <div class="all-33 buttongroup">
-                  <a class="heroButtons">Login</a>
-                  <a class="heroButtons">Signup</a>
+                  {% if logged_in %}
+                  <a class="heroButtons" href="{{ url_for('logout') }}">Logout</a>
+                  {% else %}
+                  <a class="heroButtons" href="{{ url_for('home') }}">Login</a>
+                  <a class="heroButtons" href="{{ url_for('register') }}">Signup</a>
+                  {% endif %}
                 </div>
                 <a href="/" class="all-33 topimage"></a>
                 <div class="all-33 buttongroup">

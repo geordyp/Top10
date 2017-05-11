@@ -1,7 +1,12 @@
 {% extends 'base.html'%}
 {% block content %}
 <div class="category">
-    <h2 class="categorystyles blackcolor">{{ categoryTitle }} &nbsp;&nbsp;&nbsp; <a  class="addcategory" href="{{ url_for('newTopTenList', category_url=categoryUrl) }}">Create a List</a></h2>
+    <h2 class="categorystyles blackcolor">
+      {{ categoryTitle }}
+      {% if logged_in %}
+      <a  class="addcategory" href="{{ url_for('newTopTenList', category_url=categoryUrl) }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your List</a>
+      {% endif %}
+    </h2>
     <div class="column-group horizontal-gutters">
       {% for list in listsWithItems %}
       <div class="all-33">

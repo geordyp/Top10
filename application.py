@@ -17,6 +17,7 @@ import random
 import json
 import httplib2
 import requests
+import hashlib
 
 app = Flask(__name__)
 
@@ -29,11 +30,58 @@ session = DBSession()
 
 
 @app.route('/')
+def home():
+    if not login_session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return redirect(url_for('showHome'))
+
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    POST_USERNAME = str(request.form['username'])
+    POST_PASSWORD = str(request.form['password'])
+    phash = hashlib.sha256(POST_PASSWORD).hexdigest()
+    result = session.query(UserAccount).filter_by(name=POST_USERNAME, pwHash=phash).all()
+    if result:
+       login_session['logged_in'] = True
+       login_session['user_id'] = result[0].id
+    else:
+        # TODO display error
+        flash('wrong password!')
+    return home()
+
+
+@app.route("/logout")
+def logout():
+    login_session['logged_in'] = False
+    login_session['user_id'] = -1
+    return home()
+
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    else:
+        email = request.form['email']
+        name = request.form['username']
+        password = request.form['pwd']
+        pwd = hashlib.sha256(password).hexdigest()
+        # TODO check if name is taken
+        newUser = UserAccount(name=name,email=email,pwHash=pwd)
+        session.add(newUser)
+        session.commit()
+        return redirect(url_for('home'))
+
+
 @app.route('/top10')
 def showHome():
     """ Show the home page """
     data = session.query(Category).all()
-    return render_template('homescreen.html', categories=data)
+    return render_template('homescreen.html',
+                           categories=data,
+                           logged_in=login_session.get('logged_in'))
 
 
 @app.route('/top10/category/<string:category_url>')
@@ -46,32 +94,33 @@ def showCategory(category_url):
     allListsWithItems = []
     for l in allLists:
         listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
-        if (len(listItems) > 2):
+        if (len(listItems) > 5):
             allListsWithItems.append(listItems)
-
     return render_template('categorytable.html',
                            listsWithItems=allListsWithItems,
                            categoryTitle=listCategory.name,
-                           categoryUrl=listCategory.url)
+                           categoryUrl=listCategory.url,
+                           logged_in=login_session.get('logged_in'))
 
 
 @app.route('/top10/category/<string:category_url>/list/new')
 def newTopTenList(category_url):
     """ Create a new top ten list for the given category """
+    if not login_session.get('logged_in'):
+        return redirect(url_for('home'))
+
     # TODO 404 category not found
     listCategory = session.query(Category).filter_by(url=category_url).one()
 
-    # TODO replace user_account_id=1 with currently logged in user
-
     # check if a list in this category has already been created by this user
-    existingList = session.query(List).filter_by(category_id=listCategory.id, user_account_id=1).all()
+    existingList = session.query(List).filter_by(category_id=listCategory.id, user_account_id=login_session.get('user_id')).all()
     list_id = ""
     if (existingList):
         # if so, edit the exisiting list
         list_id = str(existingList[0].id)
     else:
         # if not, create a new list and edit
-        newTopTenList = List(user_account_id=1,
+        newTopTenList = List(user_account_id=login_session.get('user_id'),
                              category_id=listCategory.id)
         session.add(newTopTenList)
         session.commit()
@@ -84,9 +133,17 @@ def newTopTenList(category_url):
 @app.route('/top10/list/<string:list_id>/edit')
 def editTopTenList(list_id):
     """ Edit a top ten list """
+    if not login_session.get('logged_in'):
+        return redirect(url_for('home'))
+
     # TODO 404 list not found
     topTenList = session.query(List).filter_by(id=list_id).one()
     listItems = session.query(ListItem).filter_by(list_id=list_id).order_by(asc(ListItem.position)).all()
+
+    # check if the user created the list they're about to edit
+    if login_session.get('user_id') != topTenList.user_account_id:
+        return redirect(url_for('showCategory',
+                                category_url=topTenList.category.url))
 
     canAddMoreItems = False
     if (len(listItems) < 10):
@@ -96,14 +153,23 @@ def editTopTenList(list_id):
                            listItems=listItems,
                            list=topTenList,
                            canAddMoreItems=canAddMoreItems,
-                           error="")
+                           error="",
+                           logged_in=login_session.get('logged_in'))
 
 
 @app.route('/top10/list/<string:list_id>/item/new', methods=['GET', 'POST'])
 def newListItem(list_id):
     """ Create a new list item """
+    if not login_session.get('logged_in'):
+        return redirect(url_for('home'))
+
     # TODO 404 list not found
     topTenList = session.query(List).filter_by(id=list_id).one()
+
+    # check if the user created the list they're about to edit
+    if login_session.get('user_id') != topTenList.user_account_id:
+        return redirect(url_for('showCategory',
+                                category_url=topTenList.category.url))
 
     listItems = session.query(ListItem).filter_by(list_id=list_id).order_by(asc(ListItem.position)).all()
     newItemPosition = -1
@@ -114,7 +180,8 @@ def newListItem(list_id):
                                listItems=listItems,
                                list=topTenList,
                                canAddMoreItems=False,
-                               error="Can't create more than 10 items in your list")
+                               error="Can't create more than 10 items in your list",
+                               logged_in=login_session.get('logged_in'))
 
     if request.method == 'GET':
         return render_template('listItem_form.html',
@@ -124,7 +191,8 @@ def newListItem(list_id):
                                editing=False,
                                title="",
                                description="",
-                               error="")
+                               error="",
+                               logged_in=login_session.get('logged_in'))
     else:
         if request.form['title']:
             newItem = ListItem(list_id=list_id,
@@ -143,14 +211,23 @@ def newListItem(list_id):
                                    editing=False,
                                    title=request.form['title'],
                                    description=request.form['description'],
-                                   error=error)
+                                   error=error,
+                                   logged_in=login_session.get('logged_in'))
 
 
 @app.route('/top10/item/<string:listItem_id>/edit', methods=['GET', 'POST'])
 def editListItem(listItem_id):
     """ Edit a list item """
+    if not login_session.get('logged_in'):
+        return redirect(url_for('home'))
+
     # TODO 404 item not found
     editedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+
+    # check if the user created the list they're about to edit
+    if login_session.get('user_id') != editedListItem.list.user_account_id:
+        return redirect(url_for('showCategory',
+                                category_url=editedListItem.list.category.url))
 
     if request.method == 'GET':
         return render_template('listItem_form.html',
@@ -160,7 +237,8 @@ def editListItem(listItem_id):
                                editing=True,
                                title=editedListItem.title,
                                description=editedListItem.description,
-                               error="")
+                               error="",
+                               logged_in=login_session.get('logged_in'))
     else:
         if request.form['title']:
             editedListItem.title = request.form['title']
@@ -173,7 +251,8 @@ def editListItem(listItem_id):
                                    editing=True,
                                    title=request.form['title'],
                                    description=request.form['description'],
-                                   error=error)
+                                   error=error,
+                                   logged_in=login_session.get('logged_in'))
 
         editedListItem.description = request.form['description']
 
@@ -201,7 +280,8 @@ def editListItem(listItem_id):
                                            editing=True,
                                            title=request.form['title'],
                                            description=request.form['description'],
-                                           error=error)
+                                           error=error,
+                                           logged_in=login_session.get('logged_in'))
         else:
             error = "Please include a position."
             return render_template('listItem_form.html',
@@ -211,7 +291,8 @@ def editListItem(listItem_id):
                                    editing=True,
                                    title=request.form['title'],
                                    description=request.form['description'],
-                                   error=error)
+                                   error=error,
+                                   logged_in=login_session.get('logged_in'))
 
         session.add(editedListItem)
         session.commit()
@@ -221,8 +302,16 @@ def editListItem(listItem_id):
 @app.route('/top10/item/<string:listItem_id>/delete')
 def deleteListItem(listItem_id):
     """ Delete a list item """
+    if not login_session.get('logged_in'):
+        return redirect(url_for('home'))
+
     # TODO 404 not found
     deletedListItem = session.query(ListItem).filter_by(id=listItem_id).one()
+
+    # check if the user created the list they're about to edit
+    if login_session.get('user_id') != deletedListItem.list.user_account_id:
+        return redirect(url_for('showCategory',
+                                category_url=deletedListItem.list.category.url))
 
     # shift the remaining list items
     listItems = session.query(ListItem).filter_by(list_id=deletedListItem.list_id).order_by(asc(ListItem.position)).all()
@@ -235,7 +324,7 @@ def deleteListItem(listItem_id):
     return redirect(url_for('editTopTenList', list_id=deletedListItem.list_id))
 
 
-
 if __name__ == '__main__':
+    app.secret_key = 'super_duper_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=2077)
