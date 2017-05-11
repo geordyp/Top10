@@ -8,6 +8,9 @@
   </div>
   <div class="all-50 uploadbox">
     <h2>Your List For <a href="{{ url_for('showCategory', category_url=list.category.url) }}">{{list.category.name}}</a></h2>
+    {% if listLength < 5 %}
+    <p>Note: Your list must have at least 5 items to show up on the category page.</p>
+    {% endif %}
     <ol>
       {% for i in listItems %}
       <li><b>{{i.title}}</b> -- <a href="{{ url_for('editListItem', listItem_id=i.id) }}">Edit</a> | <a href="{{ url_for('deleteListItem', listItem_id=i.id) }}">Delete</a></li>

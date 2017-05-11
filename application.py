@@ -108,7 +108,7 @@ def showCategory(category_url):
     allListsWithItems = []
     for l in allLists:
         listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
-        if (len(listItems) > 5):
+        if (len(listItems) > 4):
             allListsWithItems.append(listItems)
     return render_template('categorytable.html',
                            listsWithItems=allListsWithItems,
@@ -170,6 +170,7 @@ def editTopTenList(list_id):
 
     return render_template('list_form.html',
                            listItems=listItems,
+                           listLength=len(listItems),
                            list=topTenList,
                            canAddMoreItems=canAddMoreItems,
                            error="",
