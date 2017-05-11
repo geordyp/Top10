@@ -107,9 +107,10 @@ def showCategory(category_url):
     allLists = session.query(List).filter_by(category_id=listCategory.id).order_by(desc(List.date_created)).all()
     allListsWithItems = []
     for l in allLists:
-        listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
-        if (len(listItems) > 4):
-            allListsWithItems.append(listItems)
+        if l.user_account_id != 1:
+            listItems = session.query(ListItem).filter_by(list_id=l.id).order_by(asc(ListItem.position)).all()
+            if (len(listItems) > 4):
+                allListsWithItems.append(listItems)
     return render_template('categorytable.html',
                            listsWithItems=allListsWithItems,
                            categoryTitle=listCategory.name,
