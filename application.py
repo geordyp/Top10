@@ -40,6 +40,7 @@ def showHome():
 def showCategory(category_url):
     """ Display category page with all top ten lists """
     # retrieve data
+    # TODO 404 category not found
     listCategory = session.query(Category).filter_by(url=category_url).one()
     allLists = session.query(List).filter_by(category_id=listCategory.id).order_by(asc(List.date_created)).all()
     allListsWithItems = []
@@ -53,8 +54,9 @@ def showCategory(category_url):
 
 
 @app.route('/top10/category/<string:category_url>/list/new')
-def createTopTenList(category_url):
+def newTopTenList(category_url):
     """ Create a new top ten list for the given category """
+    # TODO 404 category not found
     listCategory = session.query(Category).filter_by(url=category_url).one()
 
     # TODO replace user_account_id=1 with currently logged in user
@@ -79,17 +81,63 @@ def createTopTenList(category_url):
 
 @app.route('/top10/list/<string:list_id>/edit')
 def editTopTenList(list_id):
+    # TODO 404 list not found
     topTenList = session.query(List).filter_by(id=list_id).one()
-    return render_template('edit_list.html',
-                           list=topTenList)
+    listItems = session.query(ListItem).filter_by(list_id=list_id).order_by(asc(ListItem.position)).all()
+
+    canAddMoreItems = False
+    if (len(listItems) < 10):
+        canAddMoreItems = True
+
+    return render_template('list_form.html',
+                           listItems=listItems,
+                           list=topTenList,
+                           canAddMoreItems=canAddMoreItems,
+                           error="")
 
 
-@app.route('/top10/list/<string:list_id>/item/new')
-def createListItem(list_id):
-    return render_template('new_list.html', id=list_id)
+@app.route('/top10/list/<string:list_id>/item/new', methods=['GET', 'POST'])
+def newListItem(list_id):
+    # TODO 404 list not found
+    topTenList = session.query(List).filter_by(id=list_id).one()
+
+    listItems = session.query(ListItem).filter_by(list_id=list_id).order_by(asc(ListItem.position)).all()
+    newItemPosition = -1
+    if (len(listItems) < 10):
+        newItemPosition = len(listItems) + 1
+    else:
+        return render_template('list_form.html',
+                               listItems=listItems,
+                               list=topTenList,
+                               canAddMoreItems=False,
+                               error="Can't create more than 10 items in your list")
+
+    if request.method == 'GET':
+        return render_template('listItem_form.html',
+                               list=topTenList,
+                               position=newItemPosition,
+                               title="",
+                               description="",
+                               error="")
+    else:
+        if request.form['title']:
+            newItem = ListItem(list_id=list_id,
+                               position=newItemPosition,
+                               title=request.form['title'],
+                               description=request.form['description'])
+            session.add(newItem)
+            session.commit()
+            return redirect(url_for('editTopTenList', list_id=list_id))
+        else:
+            error = "Please include a title."
+            return render_template('listItem_form.html',
+                                   list=topTenList,
+                                   position=newItemPosition,
+                                   title=request.form['title'],
+                                   description=request.form['description'],
+                                   error=error)
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_duper_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=2077)

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<h2>Item Number {{position}} in Your {{list.category.name}} List</h2>
+<form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
+  <label>
+    <div>Title</div>
+    <input type='text' name='title' value={{title}}></input>
+  </label>
+  <label>
+    <div>Description</div>
+    <textarea name='description'>{{description}}</textarea>
+  </label>
+  <br><br><div class="error">{{error}}</div><br>
+  <input type='submit' value='Create'>
+  <a href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
+</form>
+{% endblock %}
