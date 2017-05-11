@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<h3>Create a list for {{list.category.name}}</h3>
+<a href="{{ url_for('createListItem', list_id=list.id) }}">Add new item</a>
+{% endblock %}
