@@ -28,7 +28,7 @@ h1 {
 
 .galleryitem {
   text-align: center;
-  background-color: #42aaf4;
+  background-color: #f48f42;
   height: 0;
   padding-bottom: 25%;
   width: 25%;
@@ -42,11 +42,15 @@ h1 {
   height: 300px;
 }
 
+.error {
+  color: red;
+}
+
 .categorytext {
   height: 100%;
   position: relative;
   top: 40%;
-  color: red;
+  color: black;
 }
 
 
@@ -82,9 +86,40 @@ h1 {
   height: 100%;
 }
 
+a:hover.topimage {
+  border-left:2px solid black;
+}
+
+.plusimage {
+  background-image: url('../static/add.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+}
+
+/*
+a:hover.plusimage {
+  border-left: 2px solid black;
+}
+*/
+
 /* top10 tables*/
 .tablebackground{
   background-color: #f48f42;
+}
+
+.addcategory {
+    color: white;
+}
+
+a:hover.addcategory {
+  text-decoration: none;
+  color: black;
+}
+
+.blackcolor {
+  color: black;
 }
 
 .categorystyles{
@@ -97,4 +132,35 @@ h1 {
   background-color: #f48f42;
   text-align: center;
   border: 2px solid black;
+}
+
+/* upload forms */
+.leftpad {
+  width: 100%;
+}
+
+h2 {
+  padding-top: 5px;
+}
+
+.textbox {
+  width: 80%;
+}
+
+.pad {
+  padding-top: 10px;
+}
+
+.buttonheight {
+  padding-bottom: 20px;
+}
+
+.titlestyle {
+  width: 60%;
+}
+
+.uploadbox{
+  background-color: #D3D3D3;
+  border: 4px solid black;
+  text-align: center;
 }

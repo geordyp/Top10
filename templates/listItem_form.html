@@ -2,32 +2,43 @@
 {% block content %}
 <br>
 <br>
-<h2>Item Number {{position}} in Your {{list.category.name}} List</h2>
-{% if editing %}
-<form action='{{ url_for('editListItem', listItem_id=id) }}' method='post'>
-{% else %}
-<form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
-{% endif %}
-  {% if editing %}
-  <label>
-    <div>Position</div>
-    <input type='number' min="1" max="10" name='position' value="{{position}}"></input>
-  </label>
-  {% endif %}
-  <label>
-    <div>Title</div>
-    <input type='text' name='title' value="{{title}}"></input>
-  </label>
-  <label>
-    <div>Description</div>
-    <textarea name='description'>{{description}}</textarea>
-  </label>
-  <br><br><div class='error'>{{error}}</div><br>
-  {% if editing %}
-  <input type='submit' value="Edit">
-  {% else %}
-  <input type='submit' value="Create">
-  {% endif %}
-  <a href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
-</form>
+<div class="column-group">
+  <div class="all-25">
+    <p class="leftpadd">
+  </div>
+  <div class="all-50 uploadbox">
+    <h2>Item Number {{position}} in Your <a href="{{ url_for('showCategory', category_url=list.category.url) }}">{{list.category.name}}</a> List</h2>
+    {% if editing %}
+    <form action='{{ url_for('editListItem', listItem_id=id) }}' method='post'>
+    {% else %}
+    <form action='{{ url_for('newListItem', list_id=list.id) }}' method='post'>
+    {% endif %}
+      {% if editing %}
+      <div>
+        <div>Position</div>
+        <input type='number' min="1" max="10" name='position' value="{{position}}"></input>
+      </div>
+      {% endif %}
+      <div>
+        <div>Title</div>
+        <input class="titlestyle" type='text' name='title' value="{{title}}"></input>
+      </div>
+      <div>
+        <div class="pad">Description</div>
+        <textarea class="textbox" name='description'>{{description}}</textarea>
+      </div>
+      <br><br><div class="error">{{error}}</div><br>
+      <div class="buttonheight">
+        {% if editing %}
+        <input type='submit' value="Edit">
+        {% else %}
+        <input class="btn btn-success" type='submit' value="Create">
+        {% endif %}
+        <a class="btn btn-danger error" href='{{ url_for('editTopTenList', list_id=list.id) }}'>Cancel</a>
+      </div>
+    </form>
+  </div>
+  <div class="all-25">
+  </div>
+</div>
 {% endblock %}

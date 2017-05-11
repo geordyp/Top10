@@ -50,7 +50,9 @@ def showCategory(category_url):
             allListsWithItems.append(listItems)
 
     return render_template('categorytable.html',
-                           listsWithItems=allListsWithItems)
+                           listsWithItems=allListsWithItems,
+                           categoryTitle=listCategory.name,
+                           categoryUrl=listCategory.url)
 
 
 @app.route('/top10/category/<string:category_url>/list/new')
