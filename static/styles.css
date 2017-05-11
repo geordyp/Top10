@@ -94,6 +94,9 @@ a:hover.topimage {
   height: 100%;
 }
 
+a:hover.plusimage {
+  border-left: 2px solid black;
+}
 /* top10 tables*/
 .tablebackground{
   background-color: #f48f42;
