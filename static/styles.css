@@ -28,7 +28,7 @@ h1 {
 
 .galleryitem {
   text-align: center;
-  background-color: #42aaf4;
+  background-color: #f48f42;
   height: 0;
   padding-bottom: 25%;
   width: 25%;
@@ -42,11 +42,15 @@ h1 {
   height: 300px;
 }
 
+.error {
+  color: red;
+}
+
 .categorytext {
   height: 100%;
   position: relative;
   top: 40%;
-  color: red;
+  color: black;
 }
 
 
